@@ -1,0 +1,289 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Morshed || Portfolio</title>
+
+
+    {% include 'morshed_portfolio/style.html'%}
+
+</head>
+
+<body>
+    {% for intro in intro_obj%}
+    {% if intro.publish is True%}
+    <div class="scroll-up-btn">
+        <i class="fas fa-angle-up"></i>
+    </div>
+    <nav class="navbar sticky ">
+
+        <div class="max-width">
+            <div class="logo">
+
+
+                <a href="#home">
+
+                    <div class="text-logo">Md Monjur Morshed</div>
+
+                </a>
+            </div>
+            <ul class="menu">
+                <li><a href="#about" class="menu-btn">About</a></li>
+                <li><a href="#experience" class="menu-btn">Experience</a></li>
+
+
+                <li><a href="#projects" class="menu-btn">Projects</a></li>
+                <li><a href="#skills" class="menu-btn">Skills</a></li>
+                <li><a href="#education" class="menu-btn">Education</a></li>
+                <li><a href="#contact" class="menu-btn">Contact</a></li>
+            </ul>
+            <div class="menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+
+    </nav>
+
+    <!-- home section start -->
+    <section class="home bg-image" id="home" style="background-image: url('/media/{{intro.bgImage}}');">
+        <div class="max-width">
+
+
+            <div class="home-content">
+                <!-- <div class="text-1">I am,</div>-->
+                <div class="text-1">I'm a </div>
+                <div class="text-2"><span class="typing"></span></div>
+                <div class="hire">Hire Me</div>
+            </div>
+          
+
+
+
+
+        </div>
+
+    </section>
+
+    <!-- about section start -->
+    {%for about in about_obj %}
+    {%if about.publish is True%}
+    <section class="about" id="about">
+        <div class="max-width">
+            <h2 class="title">About me</h2>
+
+            <div class="about-content">
+                <div class="column left">
+                    <img src="/media/{{about.aboutImage}}" alt="">
+                </div>
+                <div class="column right">
+                    <div class="text">I'm Morshed and I'm a <span class="typing-2"></span></div>
+                    <p>{{about.aboutDescription}}</p>
+                    <a href="/media/{{about.aboutCv}}">Download CV</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+    {%endfor%}
+
+
+    <!-- Experience section start -->
+    <section class="services" id="experience">
+        <div class="max-width">
+            <h2 class="title">My experience</h2>
+            <div class="serv-content">
+                {% for experience in experience_obj %}
+                {% if experience.publish is True%}
+                <div class="card">
+                    <div class="box">
+                        <!-- <img src="images/digitalit.png" height="50px;" alt=""> -->
+                        <div class="text">{{experience.designation}}
+                            <br>
+                            <span class="event">At {{experience.companyName}} </span>
+                            <br>
+                            <span class="event">{{experience.start_date}} to {%if experience.end_date is None%}Present{%else%}{{experience.end_date}}{% endif%}</span>
+                        </div>
+                        <p>{{experience.responsibility}}</p>
+                    </div>
+                </div>
+                {% endif%}
+                {% endfor%}
+
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects section starts -->
+
+    <section class="teams" id="projects">
+        <div class="max-width">
+            <h2 class="title">Letest Project's</h2>
+            <div class="carousel owl-carousel">
+                {% for project in projects_obj%}
+                {% if project.publish is True%}
+                <div class="card">
+                    <a href="{{project.repository}}" target="_blank">
+                        <div class="box">
+                            <img class="miraj-company-logo" src="/media/{{project.peoject_logo}}" alt="">
+                            <div class="text">{{project.project_title}}</div>
+                            <span class="event">{{project.start_date}} to {% if project.end_date is None%}
+                                Present {% else %} {{project.end_date}} {% endif %}</span>
+                            <p>{{project.description}}</p>
+                        </div>
+                    </a>
+                </div>
+                {% endif %}
+                {% endfor %}
+              
+                
+            </div>
+        </div>
+    </section>
+    <section class="skills" id="skills">
+        <div class="max-width">
+            <h2 class="title">My skills</h2>
+            <div class="skills-content">
+                <div class="column left">
+                    <div class="text">My creative skills & experiences.</div>
+                    <p>{{intro.skill_ease}}</p>
+                </div>
+                <div class="column right">
+                    {%for skill in skill_obj %}
+                    {% if skill.publish is True%} <div class="bars">
+                        <div class="info">
+                            <span>{{skill.skill_title}}</span>
+                            <span>{{skill.knowledge_percent}}%</span>
+                        </div>
+                        <!-- <style>
+                            .skills-content .right .skill-{{ skill.skill_title|lower }}::before {
+                                width:var(--percent,0%);
+                            }
+                        </style> -->
+                        <div class="line {{skill.skill_title|lower}} "></div>
+                    </div>
+                    <script>
+                        // $(document).ready(function(){
+                        //     $('.{{skill.skill_title|lower}}').style.width='{{skill.knowledge_percent}}%'
+                        //     $('.{{skill.skill_title|lower}}').style.color='#32a852'
+                        // })
+
+                        var percent = '{{skill.knowledge_percent}}';
+                        var styleTag = document.createElement('style')
+                        styleTag.innerHTML = `
+                        .{{skill.skill_title|lower}}::before{
+                            width:${percent}%;
+                        }
+                        `
+                        document.head.appendChild(styleTag)
+                    </script>
+
+
+                    {% endif%}
+                    {%endfor%}
+
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--  education and certification-->
+
+    <section class="services" id="education">
+        <div class="max-width">
+            <h2 class="title">Education & Training</h2>
+            <div class="serv-content education">
+                {% for education in education_obj%}
+                {% if education.publish is True %}
+                <div class="card">
+                    <a href="{{education.link}}" target="_blank">
+                        <div class="box">
+                            <img src="/media/{{education.institute_logo}}" height="50px;" alt="">
+                            <div class="text">{{education.institute_name}}
+                                <br>
+                                <span class="event">{{education.start_date}} to {% if education.end_date is None%}
+                                    Present {% else %} {{education.end_date}} {% endif %}</span>
+                            </div>
+                            <p>{{education.course_title}}</p>
+                        </div>
+                    </a>
+                </div>
+                 {% endif %}
+                {% endfor %}
+
+
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- contact section start -->
+    <section class="contact" id="contact">
+        <div class="max-width">
+            <h2 class="title">Contact me</h2>
+            <div class="contact-content">
+                <div class="column right">
+                    <img src="/media/{{intro.contact_image}}" height="100%" width="100%" alt="">
+                </div>
+                <div class="column left">
+                    <div class="text">Get in Touch</div>
+                    <p>I think you should interested on my profile and experience. Reach me given information below.
+                    </p>
+                    <div class="icons">
+                        {% for contact in contact_obj%}
+                        {% if contact.publish%}
+                        <div class="row">
+                            <i class="{{contact.icon}}"></i>
+                            <div class="info">
+                                <div class="head">{{contact.title}}</div>
+                                <div class="sub-title">{{contact.info}}</div>
+                            </div>
+                        </div>
+
+                        {% endif %}
+                        {% endfor%}
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- footer section start -->
+    <footer>
+        <span style="color:  rgb(255, 252, 60);"> Md Monjur Morshed </span>| <span
+            class="far fa-copyright"></span>2023<span class="copyright-year"></span> All rights reserved.
+    </footer>
+
+    {% include 'morshed_portfolio/scripts.html'%}
+   
+    <!-- script is to make hire me button work -->
+    <script>
+        $(document).ready(function(){
+            $('.hire').on('click',function(){
+           const recipientEmail='morshedfirst@gmail.com'
+          const mailTo=`mailto:${recipientEmail}`
+          window.location.href=mailTo
+        })
+        })
+    </script>
+
+    {% endif%}
+    {% endfor%}
+
+
+
+
+
+
+
+</body>
+
+</html>
